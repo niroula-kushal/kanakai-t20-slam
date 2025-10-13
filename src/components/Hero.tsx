@@ -2,12 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ArrowRight, Calendar } from "lucide-react";
 import heroImage from "@/assets/nep-cri-2.png";
-import logo from "/logo.png";
+import logo from "@/assets/logo.png";
 
 import { useState } from "react";
 
 const Hero = () => {
   const [open, setOpen] = useState(false);
+  const [registerOpen, setRegisterOpen] = useState(false);
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -43,10 +44,20 @@ const Hero = () => {
 
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4">
-            <Button size="lg" variant="hero" className="group">
+            <Button size="lg" variant="hero" className="group" onClick={() => setRegisterOpen(true)}>
               Register Your Team
               <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />
             </Button>
+            <Dialog open={registerOpen} onOpenChange={setRegisterOpen}>
+              <DialogContent className="max-w-md text-center">
+                <img src={logo} alt="Logo" className="mx-auto mb-4 h-14 w-14 rounded-full bg-white p-2 border border-accent shadow" />
+                <DialogHeader>
+                  <DialogTitle className="text-2xl mb-2 text-center">Registration Coming Soon</DialogTitle>
+                </DialogHeader>
+                <p className="text-muted-foreground mb-2">We will soon add a form for team registration.<br />Stay tuned!</p>
+                <Button onClick={() => setRegisterOpen(false)} className="mt-2 w-full" variant="secondary">Close</Button>
+              </DialogContent>
+            </Dialog>
             <Dialog open={open} onOpenChange={setOpen}>
               <Button
                 size="lg"
