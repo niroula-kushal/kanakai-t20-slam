@@ -1,6 +1,6 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Trophy, Users, Calendar, MapPin, Award, Clock } from "lucide-react";
-import trophyImage from "@/assets/cricket-trophy.jpg";
+import trophyImage from "@/assets/logo.png";
 
 const TournamentDetails = () => {
   const details = [
