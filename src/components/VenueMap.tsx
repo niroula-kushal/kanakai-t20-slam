@@ -30,7 +30,7 @@ const VenueMap = () => {
   const longitude = VENUE_COORDS.longitude;
 
 
-  map.current = L.map(mapContainer.current).setView([latitude, longitude], 13);
+  map.current = L.map(mapContainer.current).setView([latitude, longitude], 17);
 
     // Define base layers
     const osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
