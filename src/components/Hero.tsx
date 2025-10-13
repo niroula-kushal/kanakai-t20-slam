@@ -1,7 +1,8 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowRight, Trophy, Calendar } from "lucide-react";
-import heroImage from "@/assets/cricket-hero.jpg";
+import { ArrowRight, Calendar } from "lucide-react";
+import heroImage from "@/assets/nep-cri-2.png";
+import logo from "/logo.png";
 
 import { useState } from "react";
 
@@ -25,7 +26,7 @@ const Hero = () => {
       <div className="container relative z-10 px-4 py-20 md:py-32">
         <div className="max-w-4xl mx-auto text-center space-y-8 animate-fade-in">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-accent/10 border border-accent/20 backdrop-blur-sm">
-            <Trophy className="h-5 w-5 text-accent" />
+            <img src={logo} alt="Logo" className="h-7 w-7 rounded-full bg-white p-1 border border-accent" />
             <span className="text-sm font-medium text-foreground">T20 Cricket Tournament</span>
           </div>
           

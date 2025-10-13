@@ -1,4 +1,4 @@
-import { Trophy } from "lucide-react";
+import logo from "/logo.png";
 
 const Footer = () => {
   return (
@@ -7,7 +7,7 @@ const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-2">
             <div className="h-10 w-10 rounded-lg bg-primary/10 flex items-center justify-center">
-              <Trophy className="h-6 w-6 text-primary" />
+              <img src={logo} alt="Logo" className="h-8 w-8 rounded bg-white p-1 border border-primary" />
             </div>
             <div>
               <h3 className="font-bold text-lg">Kanakai 8 Youth Club</h3>
