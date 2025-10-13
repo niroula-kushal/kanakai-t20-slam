@@ -29,17 +29,33 @@ const VenueMap = () => {
   const latitude = VENUE_COORDS.latitude;
   const longitude = VENUE_COORDS.longitude;
 
+
   map.current = L.map(mapContainer.current).setView([latitude, longitude], 13);
 
-    // Add OpenStreetMap tiles (free, no API key required)
-    L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+    // Define base layers
+    const osm = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
       attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
       maxZoom: 19,
-    }).addTo(map.current);
+    });
+    const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+      attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
+      maxZoom: 19,
+    });
+    osm.addTo(map.current);
+
+    // Add layer control
+    L.control.layers({ 'Map': osm, 'Satellite': satellite }).addTo(map.current);
 
 
-    // Add marker with popup and Google Maps link
-    const marker = L.marker([latitude, longitude]).addTo(map.current);
+    // Add marker with cricket bat emoji and popup
+    const cricketBatIcon = L.divIcon({
+      html: '<span style="font-size:2rem;">🏏</span>',
+      className: '',
+      iconSize: [40, 40],
+      iconAnchor: [20, 40],
+      popupAnchor: [0, -40],
+    });
+    const marker = L.marker([latitude, longitude], { icon: cricketBatIcon }).addTo(map.current);
     marker.bindPopup(`
       <b>Cricket Ground</b><br>Tournament Venue<br>
       <a href='https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}&travelmode=driving' target='_blank' rel='noopener noreferrer' style='color:#2563eb;text-decoration:underline;'>Navigate with Google Maps</a>
