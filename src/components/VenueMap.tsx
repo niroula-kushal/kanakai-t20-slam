@@ -41,10 +41,15 @@ const VenueMap = () => {
       attribution: 'Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community',
       maxZoom: 19,
     });
-    osm.addTo(map.current);
+    const hybrid = L.tileLayer('https://{s}.google.com/vt/lyrs=y&x={x}&y={y}&z={z}', {
+      subdomains: ['mt0', 'mt1', 'mt2', 'mt3'],
+      attribution: 'Map data ©2025 Google',
+      maxZoom: 19,
+    });
+    hybrid.addTo(map.current);
 
     // Add layer control
-    L.control.layers({ 'Map': osm, 'Satellite': satellite }).addTo(map.current);
+    L.control.layers({ 'Hybrid': hybrid, 'Satellite': satellite, 'Map': osm }).addTo(map.current);
 
 
     // Add marker with cricket bat emoji and popup
