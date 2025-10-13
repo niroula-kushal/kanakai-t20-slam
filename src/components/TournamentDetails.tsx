@@ -7,19 +7,19 @@ const TournamentDetails = () => {
     {
       icon: Calendar,
       title: "Tournament Dates",
-      description: "March 15-17, 2025",
+      description: "कार्तिक ७ - १०, २०८२",
       color: "text-accent"
     },
     {
       icon: MapPin,
       title: "Venue",
-      description: "Local Cricket Ground",
+      description: "Shree Adarsha Vidya Mandir Ghailadubba,jhapa",
       color: "text-primary"
     },
     {
       icon: Users,
       title: "Teams",
-      description: "8 Teams, 15 players each",
+      description: "9+ Teams, 15 players each",
       color: "text-accent"
     },
     {
@@ -37,7 +37,7 @@ const TournamentDetails = () => {
     {
       icon: Trophy,
       title: "Registration",
-      description: "Open until March 10",
+      description: "Open until कार्तिक १, २०८२",
       color: "text-primary"
     }
   ];
@@ -88,23 +88,14 @@ const TournamentDetails = () => {
             <CardTitle className="text-2xl">Tournament Format</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="grid md:grid-cols-2 gap-6">
+            <div className="flex flex-col gap-6">
               <div>
-                <h4 className="font-semibold text-primary mb-2">League Stage</h4>
+                <h4 className="font-semibold text-accent mb-2">Knock-out Format</h4>
                 <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Round-robin format</li>
-                  <li>• Each team plays 3 matches</li>
-                  <li>• Top 4 teams advance</li>
-                  <li>• Points based on wins</li>
-                </ul>
-              </div>
-              <div>
-                <h4 className="font-semibold text-accent mb-2">Knockout Stage</h4>
-                <ul className="space-y-2 text-sm text-muted-foreground">
-                  <li>• Semi-finals (Top 4 teams)</li>
-                  <li>• Winners play final</li>
-                  <li>• Losers play 3rd place playoff</li>
-                  <li>• All matches on final day</li>
+                  <li>• All matches are knock-out</li>
+                  <li>• No round-robin or league stage</li>
+                  <li>• Lose and you are eliminated</li>
+                  <li>• Winners advance to the next round until the final</li>
                 </ul>
               </div>
             </div>
@@ -113,6 +104,9 @@ const TournamentDetails = () => {
               <p className="text-sm text-muted-foreground">
                 Standard T20 cricket rules apply. Each team plays 20 overs. Powerplay in first 6 overs. 
                 Maximum 4 overs per bowler. 15 players per team, 11 on field.
+              </p>
+              <p>
+                A rule book will be available to download soon.
               </p>
             </div>
           </CardContent>

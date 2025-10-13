@@ -25,8 +25,8 @@ const VenueMap = () => {
 
     // Initialize map - Default to a central location (can be updated later)
     // Currently set to approximate coordinates - user will update
-    const latitude = 20.5937;
-    const longitude = 78.9629;
+    const latitude = 26.611905;
+    const longitude = 87.9340373;
 
     map.current = L.map(mapContainer.current).setView([latitude, longitude], 13);
 
