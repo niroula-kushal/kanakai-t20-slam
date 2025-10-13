@@ -138,8 +138,8 @@ const VenueMap = () => {
               <MapPin className="h-8 w-8 text-primary mx-auto mb-3" />
               <h4 className="font-semibold mb-2">Address</h4>
               <p className="text-sm text-muted-foreground">
-                Local Cricket Ground<br />
-                [Address to be updated]
+                Shree Adarsha Vidya Mandir Ghailadubba <br />
+                3 south of Laxmipur
               </p>
             </div>
             <div className="bg-card border border-border rounded-lg p-6 text-center">

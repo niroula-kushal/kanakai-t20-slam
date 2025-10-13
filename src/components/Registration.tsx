@@ -27,7 +27,12 @@ const Registration = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-lg font-medium">+91 [Phone Number]</p>
+              <p className="text-lg font-medium">
+                +977-9816918391
+              </p>
+              <a href="tel:9816918391" className="text-lg font-medium text-primary hover:underline">
+                Tap here to call
+              </a>
               <p className="text-sm text-muted-foreground mt-2">
                 Call us for tournament inquiries
               </p>
@@ -42,7 +47,12 @@ const Registration = () => {
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p className="text-lg font-medium">kanakai8youthclub@email.com</p>
+              <p className="text-lg font-medium">
+                niroulakushal31@gmail.com
+              </p>
+              <a href="mailto:niroulakushal31@gmail.com" className="text-lg font-medium text-primary hover:underline">
+                Tap here to send email
+              </a>
               <p className="text-sm text-muted-foreground mt-2">
                 Send us your questions
               </p>
