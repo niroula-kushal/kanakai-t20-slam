@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
-import { MapPin } from "lucide-react";
+import { MapPin, Navigation } from "lucide-react";
+import { VENUE_COORDS, GOOGLE_MAPS_LINK } from "./venue-constants";
 
 // Fix for default marker icon in Leaflet with Vite
 import icon from "leaflet/dist/images/marker-icon.png";
@@ -23,12 +24,12 @@ const VenueMap = () => {
   useEffect(() => {
     if (!mapContainer.current || map.current) return;
 
-    // Initialize map - Default to a central location (can be updated later)
-    // Currently set to approximate coordinates - user will update
-    const latitude = 26.611905;
-    const longitude = 87.9340373;
 
-    map.current = L.map(mapContainer.current).setView([latitude, longitude], 13);
+  // Use constants for coordinates
+  const latitude = VENUE_COORDS.latitude;
+  const longitude = VENUE_COORDS.longitude;
+
+  map.current = L.map(mapContainer.current).setView([latitude, longitude], 13);
 
     // Add OpenStreetMap tiles (free, no API key required)
     L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
@@ -36,9 +37,32 @@ const VenueMap = () => {
       maxZoom: 19,
     }).addTo(map.current);
 
-    // Add marker
+
+    // Add marker with popup and Google Maps link
     const marker = L.marker([latitude, longitude]).addTo(map.current);
-    marker.bindPopup("<b>Cricket Ground</b><br>Tournament Venue").openPopup();
+    marker.bindPopup(`
+      <b>Cricket Ground</b><br>Tournament Venue<br>
+      <a href='https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}&travelmode=driving' target='_blank' rel='noopener noreferrer' style='color:#2563eb;text-decoration:underline;'>Navigate with Google Maps</a>
+    `).openPopup();
+
+    // Add a custom control button for navigation
+    const navControl = L.Control.extend({
+      onAdd: function() {
+        const btn = L.DomUtil.create('button', 'leaflet-bar leaflet-control leaflet-control-custom');
+        btn.innerHTML = '🧭';
+        btn.title = 'Navigate with Google Maps';
+        btn.style.background = '#fff';
+        btn.style.width = '34px';
+        btn.style.height = '34px';
+        btn.style.cursor = 'pointer';
+        btn.onclick = () => {
+          window.open(`https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}&travelmode=driving`, '_blank');
+        };
+        return btn;
+      },
+      onRemove: function() {}
+    });
+    map.current.addControl(new navControl({ position: 'topright' }));
 
     // Cleanup
     return () => {
@@ -65,13 +89,28 @@ const VenueMap = () => {
           </p>
         </div>
 
-        <div className="max-w-5xl mx-auto">
-          <div className="rounded-2xl overflow-hidden shadow-2xl border border-border">
-            <div 
-              ref={mapContainer} 
-              className="h-[400px] md:h-[500px] w-full"
-            />
-          </div>
+
+          <div className="max-w-5xl mx-auto">
+            <div className="rounded-2xl overflow-hidden shadow-2xl border border-border relative">
+              <div 
+                ref={mapContainer} 
+                className="h-[400px] md:h-[500px] w-full"
+              />
+            </div>
+            {/* Navigation button just below the map, centered */}
+            <div className="w-full flex justify-center mt-4">
+              <a
+                href={GOOGLE_MAPS_LINK}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="bg-primary text-white px-6 py-3 rounded-full flex items-center gap-3 shadow-2xl text-lg font-semibold border-2 border-white hover:bg-primary/90 transition-all"
+                style={{ boxShadow: '0 8px 32px 0 rgba(37,99,235,0.25)' }}
+                title="Navigate with Google Maps"
+              >
+                <Navigation className="w-6 h-6" />
+                Navigate with Google Maps
+              </a>
+            </div>
 
           <div className="grid md:grid-cols-3 gap-6 mt-8">
             <div className="bg-card border border-border rounded-lg p-6 text-center">
