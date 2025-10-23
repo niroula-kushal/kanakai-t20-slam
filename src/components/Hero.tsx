@@ -1,23 +1,27 @@
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ArrowRight, Calendar } from "lucide-react";
+import { ArrowRight, Calendar, Download, Printer, Link as LinkIcon } from "lucide-react";
 import heroImage from "@/assets/nep-cri-2.png";
 import logo from "@/assets/logo.png";
+import tiesheet from "@/assets/kanakai-t20-fixture.png";
 
 import { useState } from "react";
+import { useToast } from "@/hooks/use-toast";
 
 const Hero = () => {
-  const [open, setOpen] = useState(false);
+  // const [open, setOpen] = useState(false); // no longer used
   const [registerOpen, setRegisterOpen] = useState(false);
+  const [tiesOpen, setTiesOpen] = useState(false);
+  const { toast } = useToast();
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
-      <div 
+      <div
         className="absolute inset-0 z-0"
         style={{
           backgroundImage: `url(${heroImage})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
         }}
       >
         <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/70 to-background" />
@@ -30,7 +34,7 @@ const Hero = () => {
             <img src={logo} alt="Logo" className="h-7 w-7 rounded-full bg-white p-1 border border-accent" />
             <span className="text-sm font-medium text-foreground">T20 Cricket Tournament</span>
           </div>
-          
+
           <h1 className="text-4xl sm:text-5xl md:text-7xl font-bold tracking-tight">
             <span className="block text-foreground">Kanakai 8 Youth Club</span>
             <span className="block bg-gradient-to-r from-primary via-accent to-primary bg-clip-text text-transparent mt-2">
@@ -58,22 +62,15 @@ const Hero = () => {
                 <Button onClick={() => setRegisterOpen(false)} className="mt-2 w-full" variant="secondary">Close</Button>
               </DialogContent>
             </Dialog>
-            <Dialog open={open} onOpenChange={setOpen}>
-              <Button
-                size="lg"
-                variant="outline"
-                className="border-primary/20 hover:border-primary/40"
-                onClick={() => setOpen(true)}
-              >
-                <Calendar className="mr-2 h-5 w-5" />
-                View Schedule
-              </Button>
-              <DialogContent>
-                <DialogHeader>
-                  <DialogTitle>Tie Sheet will be added soon</DialogTitle>
-                </DialogHeader>
-              </DialogContent>
-            </Dialog>
+            <Button
+              size="lg"
+              variant="outline"
+              className="border-primary/20 hover:border-primary/40"
+              onClick={() => setTiesOpen(true)}
+            >
+              <Calendar className="mr-2 h-5 w-5" />
+              View Schedule
+            </Button>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 pt-12 max-w-3xl mx-auto">
@@ -90,6 +87,77 @@ const Hero = () => {
               <div className="text-sm text-muted-foreground mt-1">First Prize</div>
             </div>
           </div>
+
+          {/* Tiesheet spotlight */}
+          <div id="tiesheet-x" className="mt-12 flex justify-center">
+            <div id="tiesheet" className="relative max-w-3xl w-full">
+              <div className="overflow-hidden rounded-2xl shadow-2xl border border-border bg-gradient-to-tr from-white/60 via-background/30 to-white/40 p-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1">
+                    <h3 className="text-lg font-semibold">Official Tie Sheet</h3>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <Button size="sm" variant="ghost" onClick={() => setTiesOpen(true)} aria-label="Open tie sheet">
+                      View
+                    </Button>
+                    <a href={tiesheet} download="kanakai-t20-fixture.png" className="inline-flex">
+                      <Button size="sm" variant="outline" className="flex items-center gap-2">
+                        <Download className="h-4 w-4" />
+                        Download
+                      </Button>
+                    </a>
+                    <Button size="sm" variant="secondary" onClick={() => printImage(tiesheet)}>
+                                            <Printer className="h-4 w-4 mr-2" />
+                      Print
+                    </Button>
+                    <Button
+                      size="sm"
+                      variant="ghost"
+                      onClick={async () => {
+                        try {
+                          const url = `${window.location.origin}${window.location.pathname}#tiesheet`;
+                          await navigator.clipboard.writeText(url);
+                          toast({ title: "Link copied", description: "Tie sheet link copied to clipboard" });
+                        } catch (e) {
+                          toast({ title: "Could not copy", description: "Please copy the link manually" });
+                        }
+                      }}
+                      className="flex items-center gap-2"
+                    >
+                      <LinkIcon className="h-4 w-4" />
+                      Copy link
+                    </Button>
+                  </div>
+                </div>
+
+                <button
+                  onClick={() => setTiesOpen(true)}
+                  className="mt-4 w-full rounded-lg overflow-hidden bg-white/60 hover:scale-[1.01] transition-transform border border-border"
+                  aria-label="Open tie sheet full-screen"
+                >
+                  <img src={tiesheet} alt="Kanakai T20 Tie Sheet" className="w-full h-64 object-contain bg-neutral-100" />
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Tiesheet modal */}
+          <Dialog open={tiesOpen} onOpenChange={setTiesOpen}>
+            <DialogContent className="max-w-4xl w-full">
+              <DialogHeader>
+                <DialogTitle>Official Tie Sheet</DialogTitle>
+              </DialogHeader>
+              <div className="flex flex-col items-stretch">
+                <img src={tiesheet} alt="Kanakai T20 Tie Sheet" className="w-full h-[70vh] object-contain" />
+                <div className="mt-4 flex justify-end gap-2">
+                  <a href={tiesheet} download="kanakai-t20-fixture.png">
+                    <Button variant="outline" className="flex items-center gap-2"><Download className="h-4 w-4"/> Download</Button>
+                  </a>
+                  <Button onClick={() => printImage(tiesheet)} className="flex items-center gap-2"><Printer className="h-4 w-4"/> Print</Button>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
         </div>
       </div>
     </section>
@@ -97,3 +165,19 @@ const Hero = () => {
 };
 
 export default Hero;
+
+function printImage(src: string) {
+  const w = window.open('', '_blank');
+  if (!w) return;
+  const html = `<!doctype html><html><head><title>Print Tie Sheet</title><meta charset="utf-8" /><style>html,body{height:100%;margin:0}body{display:flex;align-items:center;justify-content:center;background:#fff}</style></head><body><img src="${src}" style="max-width:100%;height:auto;"/></body></html>`;
+  w.document.write(html);
+  w.document.close();
+  w.focus();
+  setTimeout(() => {
+    try {
+      w.print();
+    } catch (e) {
+      // ignore
+    }
+  }, 300);
+}
