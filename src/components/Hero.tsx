@@ -5,7 +5,7 @@ import heroImage from "@/assets/nep-cri-2.png";
 import logo from "@/assets/logo.png";
 import tiesheet from "@/assets/kanakai-t20-fixture.png";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useToast } from "@/hooks/use-toast";
 
 const Hero = () => {
@@ -13,6 +13,18 @@ const Hero = () => {
   const [registerOpen, setRegisterOpen] = useState(false);
   const [tiesOpen, setTiesOpen] = useState(false);
   const { toast } = useToast();
+  useEffect(() => {
+    const sc = () => {
+      if (window.location.hash === '#tiesheet') {
+        const el = document.getElementById('tiesheet');
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      }
+    };
+    // run once after mount
+    sc();
+    window.addEventListener('hashchange', sc);
+    return () => window.removeEventListener('hashchange', sc);
+  }, []);
   return (
     <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
       {/* Background Image */}
@@ -89,7 +101,7 @@ const Hero = () => {
           </div>
 
           {/* Tiesheet spotlight */}
-          <div id="tiesheet-x" className="mt-12 flex justify-center">
+          <div className="mt-12 flex justify-center">
             <div id="tiesheet" className="relative max-w-3xl w-full">
               <div className="overflow-hidden rounded-2xl shadow-2xl border border-border bg-gradient-to-tr from-white/60 via-background/30 to-white/40 p-4">
                 <div className="flex items-start justify-between gap-4">
@@ -115,7 +127,8 @@ const Hero = () => {
                       variant="ghost"
                       onClick={async () => {
                         try {
-                          const url = `${window.location.origin}${window.location.pathname}#tiesheet`;
+                          const base = window.location.href.split('#')[0];
+                          const url = `${base}#tiesheet`;
                           await navigator.clipboard.writeText(url);
                           toast({ title: "Link copied", description: "Tie sheet link copied to clipboard" });
                         } catch (e) {
@@ -163,6 +176,7 @@ const Hero = () => {
     </section>
   );
 };
+
 
 export default Hero;
 
